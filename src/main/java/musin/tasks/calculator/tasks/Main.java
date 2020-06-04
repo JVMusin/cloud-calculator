@@ -87,9 +87,9 @@ public class Main {
     }
 
     static class Line implements Comparable<Line> {
-      int a;
-      int b;
-      int c;
+      final int a;
+      final int b;
+      final int c;
 
       public Line(int a, int b, int c) {
         this.a = a;
