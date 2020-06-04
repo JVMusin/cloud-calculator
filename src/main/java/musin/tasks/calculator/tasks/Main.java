@@ -46,7 +46,7 @@ public class Main {
             return s;
           })
           .collect(Collectors.toList());
-      ForkJoinPool.commonPool().invokeAll(tasks);
+//      ForkJoinPool.commonPool().invokeAll(tasks);
       long failed = solvers.stream().filter(s -> s.res == -1).count();
       System.out.println("failed " + failed + " tasks");
       for (var s : tasks) s.call();
