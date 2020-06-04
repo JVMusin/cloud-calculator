@@ -67,6 +67,7 @@ public class Main implements ApplicationListener<ApplicationReadyEvent> {
         System.out.printf("save(mp(%d,%d), %d);\n", s.n, s.m, s.res);
       }
       System.out.println("DONE");
+      Thread.sleep(1000);
     }
 
     static int gcd(int a, int b) {
