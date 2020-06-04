@@ -1,44 +1,31 @@
 package musin.tasks.calculator.tasks;
 
 import lombok.SneakyThrows;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.io.*;
 import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
-/**
- * Built using CHelper plug-in
- * Actual solution is at the top
- *
- * @author Rustam Musin (t.me/JVMusin)
- */
-@Component
-public class Main implements ApplicationListener<ApplicationReadyEvent> {
-  public static void main(String[] args) {
-    InputStream inputStream = System.in;
-    OutputStream outputStream = System.out;
-    InputReader in = new InputReader(inputStream);
-    OutputWriter out = new OutputWriter(outputStream);
-    TaskG solver = new TaskG();
-    solver.solve(1, in, out);
-    out.close();
-  }
+public class Main  {
 
-  @Override
-  public void onApplicationEvent(ApplicationReadyEvent event) {
-    new TaskG().solve(-1, null, null);
+  public void run() {
+    new TaskG().solve();
   }
 
   static class TaskG {
+    static int gcd(int a, int b) {
+      if (b == 0) return a;
+      return gcd(b, a % b);
+    }
+
+    static long cn3(long n) {
+      return n * (n - 1) * (n - 2) / 6;
+    }
+
     @SneakyThrows
-    public void solve(int testNumber, InputReader in, OutputWriter out) {
+    public void solve() {
       System.out.println("FJP Parallelism is " + ForkJoinPool.getCommonPoolParallelism());
       long startTime = System.currentTimeMillis();
       System.out.println("STARTED");
@@ -69,15 +56,6 @@ public class Main implements ApplicationListener<ApplicationReadyEvent> {
       }
       System.out.println("DONE");
       Thread.sleep(1000);
-    }
-
-    static int gcd(int a, int b) {
-      if (b == 0) return a;
-      return gcd(b, a % b);
-    }
-
-    static long cn3(long n) {
-      return n * (n - 1) * (n - 2) / 6;
     }
 
     static class Solver {
@@ -163,32 +141,6 @@ public class Main implements ApplicationListener<ApplicationReadyEvent> {
         return comp;
       }
 
-    }
-
-  }
-
-  static class OutputWriter {
-    private final PrintWriter writer;
-
-    public OutputWriter(OutputStream outputStream) {
-      writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(outputStream)));
-    }
-
-    public OutputWriter(Writer writer) {
-      this.writer = new PrintWriter(writer);
-    }
-
-    public void close() {
-      writer.close();
-    }
-
-  }
-
-  static class InputReader {
-    private InputStream stream;
-
-    public InputReader(InputStream stream) {
-      this.stream = stream;
     }
 
   }

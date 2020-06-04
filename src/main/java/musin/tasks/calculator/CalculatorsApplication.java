@@ -1,12 +1,10 @@
 package musin.tasks.calculator;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import musin.tasks.calculator.tasks.Main;
 
-@SpringBootApplication
 public class CalculatorsApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CalculatorsApplication.class, args);
-	}
+  public static void main(String[] args) {
+    new Main().run();
+  }
 }
