@@ -43,8 +43,8 @@ public class Main implements ApplicationListener<ApplicationReadyEvent> {
       long startTime = System.currentTimeMillis();
       System.out.println("STARTED");
       List<Solver> solvers = new ArrayList<>();
-      for (int n = 1; n <= 10; n++) {
-        for (int m = n; m <= 20; m++) {
+      for (int n = 1; n <= 100; n++) {
+        for (int m = n; m <= 100; m++) {
           if (n * m <= 1024) {
             solvers.add(new Solver(n, m));
           }
