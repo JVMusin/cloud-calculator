@@ -39,6 +39,7 @@ public class Main implements ApplicationListener<ApplicationReadyEvent> {
   static class TaskG {
     @SneakyThrows
     public void solve(int testNumber, InputReader in, OutputWriter out) {
+      System.out.println("FJP Parallelism is " + ForkJoinPool.commonPool());
       long startTime = System.currentTimeMillis();
       System.out.println("STARTED");
       List<Solver> solvers = new ArrayList<>();
