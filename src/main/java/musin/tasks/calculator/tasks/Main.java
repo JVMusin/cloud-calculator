@@ -74,7 +74,7 @@ public class Main {
         int nm = n * m;
         for (int i = 0; i < nm; i++) {
           for (int j = i + 1; j < nm; j++) {
-            Line line = Line.build(new Point(i / m, i % m), new Point(j / m, j % m));
+            Line line = Line.build(i / m, i % m, j / m, j % m);
             if (!cnt.containsKey(line)) cnt.put(line, new HashSet<>());
             cnt.get(line).add(i);
             cnt.get(line).add(j);
@@ -83,16 +83,6 @@ public class Main {
         res = cn3(nm);
         for (Set<Integer> c : cnt.values()) res -= cn3(c.size());
         return res;
-      }
-    }
-
-    static class Point {
-      final int x;
-      final int y;
-
-      public Point(int x, int y) {
-        this.x = x;
-        this.y = y;
       }
     }
 
@@ -120,10 +110,10 @@ public class Main {
         return new Line(a, b, c);
       }
 
-      static Line build(Point p, Point q) {
-        int a = p.y - q.y;
-        int b = q.x - p.x;
-        int c = -(a * p.x + b * p.y);
+      static Line build(int x1, int y1, int x2, int y2) {
+        int a = y1 - y2;
+        int b = x2 - x1;
+        int c = -(a * x1 + b * y1);
         return build(a, b, c);
       }
 
