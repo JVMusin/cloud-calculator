@@ -87,6 +87,7 @@ public class Main  {
         }
         res = cn3(a.length);
         for (Set<Integer> c : cnt.values()) res -= cn3(c.size());
+        a = null;
         return res;
       }
 
