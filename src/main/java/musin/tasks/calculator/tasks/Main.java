@@ -63,7 +63,6 @@ public class Main {
       int n;
       int m;
       long res = -1;
-      Point[] a;
 
       public Solver(int n, int m) {
         this.n = n;
@@ -71,22 +70,17 @@ public class Main {
       }
 
       long solve() {
-        a = new Point[n * m];
-        for (int i = 0; i < n; i++) {
-          for (int j = 0; j < m; j++) {
-            a[i * m + j] = new Point(i, j);
-          }
-        }
         Map<Line, Set<Integer>> cnt = new TreeMap<>();
-        for (int i = 0; i < a.length; i++) {
-          for (int j = i + 1; j < a.length; j++) {
-            Line line = Line.build(a[i], a[j]);
+        int nm = n * m;
+        for (int i = 0; i < nm; i++) {
+          for (int j = i + 1; j < nm; j++) {
+            Line line = Line.build(new Point(i / m, i % m), new Point(j / m, j % m));
             if (!cnt.containsKey(line)) cnt.put(line, new HashSet<>());
             cnt.get(line).add(i);
             cnt.get(line).add(j);
           }
         }
-        res = cn3(a.length);
+        res = cn3(nm);
         for (Set<Integer> c : cnt.values()) res -= cn3(c.size());
         return res;
       }
