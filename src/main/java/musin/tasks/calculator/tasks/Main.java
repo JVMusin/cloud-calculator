@@ -39,7 +39,7 @@ public class Main implements ApplicationListener<ApplicationReadyEvent> {
   static class TaskG {
     @SneakyThrows
     public void solve(int testNumber, InputReader in, OutputWriter out) {
-      System.out.println("FJP Parallelism is " + ForkJoinPool.commonPool());
+      System.out.println("FJP Parallelism is " + ForkJoinPool.getCommonPoolParallelism());
       long startTime = System.currentTimeMillis();
       System.out.println("STARTED");
       List<Solver> solvers = new ArrayList<>();
@@ -53,6 +53,7 @@ public class Main implements ApplicationListener<ApplicationReadyEvent> {
       List<Callable<Solver>> tasks = solvers.stream()
           .map(s -> (Callable<Solver>) () -> {
             long res = s.solve();
+            System.out.println(ForkJoinPool.commonPool());
             System.out.printf("Task for n=%d m=%d solved with result=%d\n", s.n, s.m, res);
             return s;
           })
