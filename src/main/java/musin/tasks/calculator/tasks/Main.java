@@ -5,10 +5,9 @@ import lombok.SneakyThrows;
 import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
-public class Main  {
+public class Main {
 
   public void run() {
     new TaskG().solve();
@@ -39,13 +38,18 @@ public class Main  {
       }
       List<Callable<Solver>> tasks = solvers.stream()
           .map(s -> (Callable<Solver>) () -> {
-            long res = s.solve();
-            System.out.println(ForkJoinPool.commonPool());
-            System.out.printf("Task for n=%d m=%d solved with result=%d\n", s.n, s.m, res);
+            if (s.res == -1) {
+              long res = s.solve();
+              System.out.println(ForkJoinPool.commonPool());
+              System.out.printf("Task for n=%d m=%d solved with result=%d\n", s.n, s.m, res);
+            }
             return s;
           })
           .collect(Collectors.toList());
       ForkJoinPool.commonPool().invokeAll(tasks);
+      long failed = solvers.stream().filter(s -> s.res == -1).count();
+      System.out.println("failed " + failed + " tasks");
+      for (var s : tasks) s.call();
       System.out.println("All tasks ready");
       System.out.printf("Time elapsed: %.3f\n", (System.currentTimeMillis() - startTime) / 1000.0);
       for (Solver solver : solvers) {
@@ -58,7 +62,7 @@ public class Main  {
     static class Solver {
       int n;
       int m;
-      long res;
+      long res = -1;
       Point[] a;
 
       public Solver(int n, int m) {
@@ -87,7 +91,6 @@ public class Main  {
         a = null;
         return res;
       }
-
     }
 
     static class Point {
@@ -98,7 +101,6 @@ public class Main  {
         this.x = x;
         this.y = y;
       }
-
     }
 
     static class Line implements Comparable<Line> {
@@ -138,9 +140,6 @@ public class Main  {
         if (comp == 0) comp = Integer.compare(c, o.c);
         return comp;
       }
-
     }
-
   }
 }
-
