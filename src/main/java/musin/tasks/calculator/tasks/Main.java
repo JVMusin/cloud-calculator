@@ -45,14 +45,11 @@ public class Main  {
             return s;
           })
           .collect(Collectors.toList());
-      List<Future<Solver>> futures = ForkJoinPool.commonPool().invokeAll(tasks);
-      System.out.println("All tasks submitted");
-      for (Future<Solver> future : futures) future.get();
+      ForkJoinPool.commonPool().invokeAll(tasks);
       System.out.println("All tasks ready");
       System.out.printf("Time elapsed: %.3f\n", (System.currentTimeMillis() - startTime) / 1000.0);
-      for (Future<Solver> future : futures) {
-        Solver s = future.get();
-        System.out.printf("save(mp(%d,%d), %d);\n", s.n, s.m, s.res);
+      for (Solver solver : solvers) {
+        System.out.printf("save(mp(%d,%d), %d);\n", solver.n, solver.m, solver.res);
       }
       System.out.println("DONE");
       Thread.sleep(1000);
